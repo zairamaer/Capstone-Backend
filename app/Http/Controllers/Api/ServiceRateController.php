@@ -21,6 +21,18 @@ class ServiceRateController extends Controller
     public function index()
     {
         $serviceRates = ServiceRate::with(['serviceType', 'vehicleSize'])->get();
+    
+        $serviceRates->transform(function ($serviceRate) {
+            if ($serviceRate->serviceType && $serviceRate->serviceType->serviceTypeImage) {
+                // Only prepend the full URL if it doesn't already start with http
+                if (!str_starts_with($serviceRate->serviceType->serviceTypeImage, 'http')) {
+                    $serviceRate->serviceType->serviceTypeImage =
+                        url('storage/' . $serviceRate->serviceType->serviceTypeImage);
+                }
+            }
+            return $serviceRate;
+        });
+    
         return response()->json($serviceRates);
     }
 
@@ -83,13 +95,6 @@ class ServiceRateController extends Controller
         ], 201);
     }
     
-    
-    
-    
-    
-    
-    
-
     /**
      * Display the specified resource.
      *

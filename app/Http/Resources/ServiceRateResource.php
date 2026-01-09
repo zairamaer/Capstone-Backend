@@ -20,7 +20,7 @@ class ServiceRateResource extends JsonResource
             'serviceTypeID' => $this->serviceTypeID,
             'serviceTypeName' => $this->serviceType->serviceTypeName ?? null,
             'serviceTypeDescription' => $this->serviceType->serviceTypeDescription ?? null, 
-            'serviceTypeImage' => $this->serviceTypeImage,
+            'serviceTypeImage' => $this->serviceType->serviceTypeImage ?? null, // FIX: Get from serviceType relationship
             'price' => $this->price,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
